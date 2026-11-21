@@ -1,0 +1,51 @@
+table f_interconsultas_ajustado
+	lineageTag: 644155b3-47c9-4ffb-b817-0af3f7d826ec
+
+	column servicio
+		dataType: string
+		lineageTag: 90005837-1eca-453b-bd1e-e71a64ae79b0
+		summarizeBy: none
+		sourceColumn: servicio
+
+	column n
+		dataType: int64
+		lineageTag: 106a8053-2e04-4bde-8afe-8820bdd5fec0
+		summarizeBy: sum
+		sourceColumn: n
+
+	column crudo_h
+		dataType: double
+		formatString: 0.0
+		lineageTag: 368640b4-4132-412f-b60f-539284f2e71f
+		summarizeBy: sum
+		sourceColumn: crudo_h
+
+	column ajustado_h
+		dataType: double
+		formatString: 0.0
+		lineageTag: ca700a77-aa1c-4b8d-a049-319581c6aa3f
+		summarizeBy: sum
+		sourceColumn: ajustado_h
+
+	column ic95_inf
+		dataType: double
+		lineageTag: d7639145-e9b8-4815-aa47-8577228aa7b0
+		summarizeBy: sum
+		sourceColumn: ic95_inf
+
+	column ic95_sup
+		dataType: double
+		lineageTag: 225e037f-f82f-4363-9a2f-095d949818bf
+		summarizeBy: sum
+		sourceColumn: ic95_sup
+
+	partition f_interconsultas_ajustado = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(RutaDatos & "f_interconsultas_ajustado.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"servicio", type text}, {"n", Int64.Type}, {"crudo_h", type number}, {"ajustado_h", type number}, {"ic95_inf", type number}, {"ic95_sup", type number}}, "en-US")
+				in
+				    Typed
+

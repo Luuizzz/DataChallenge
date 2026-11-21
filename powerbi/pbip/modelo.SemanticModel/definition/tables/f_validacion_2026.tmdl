@@ -1,0 +1,40 @@
+table f_validacion_2026
+	lineageTag: fdcf79f0-4037-4250-8939-ba4d0840bc69
+
+	column indicador
+		dataType: string
+		lineageTag: 04de322c-0103-4c97-ad51-c9d0313e1bba
+		summarizeBy: none
+		sourceColumn: indicador
+
+	column observado_2026
+		dataType: double
+		formatString: 0.0
+		lineageTag: b47bd734-7a4a-43ee-b555-fb37feb0953a
+		summarizeBy: sum
+		sourceColumn: observado_2026
+
+	column simulado_C269
+		dataType: double
+		formatString: 0.0
+		lineageTag: ae869fc8-9b30-40e6-831c-c4c38c762d76
+		summarizeBy: sum
+		sourceColumn: simulado_C269
+
+	column simulado_C260
+		dataType: double
+		formatString: 0.0
+		lineageTag: 2d6ec322-b1de-4af2-9a4d-5aa06a122171
+		summarizeBy: sum
+		sourceColumn: simulado_C260
+
+	partition f_validacion_2026 = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(RutaDatos & "f_validacion_2026.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"indicador", type text}, {"observado_2026", type number}, {"simulado_C269", type number}, {"simulado_C260", type number}}, "en-US")
+				in
+				    Typed
+

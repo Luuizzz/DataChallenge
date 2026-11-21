@@ -1,0 +1,31 @@
+table f_decision
+	lineageTag: fac07731-992f-4f56-af52-f85248c0dca8
+
+	column metrica
+		dataType: string
+		lineageTag: 6e1550ee-fb74-4820-935a-e4017d58a56e
+		summarizeBy: none
+		sourceColumn: metrica
+
+	column valor
+		dataType: double
+		lineageTag: 99ec5ebb-f62a-46db-bdb4-25f79f2aac90
+		summarizeBy: sum
+		sourceColumn: valor
+
+	column orden
+		dataType: int64
+		lineageTag: d4ea1fe3-c078-4623-87c9-d2e70fb4c20b
+		summarizeBy: none
+		sourceColumn: orden
+
+	partition f_decision = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(RutaDatos & "f_decision.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"metrica", type text}, {"valor", type number}, {"orden", Int64.Type}}, "en-US")
+				in
+				    Typed
+

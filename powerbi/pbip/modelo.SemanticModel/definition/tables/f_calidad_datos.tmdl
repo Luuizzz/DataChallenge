@@ -1,0 +1,31 @@
+table f_calidad_datos
+	lineageTag: 6db4ce9c-a315-49a9-9fd3-ae61ce0938ef
+
+	column problema
+		dataType: string
+		lineageTag: 7808077a-c30a-477c-857c-33b8664cf4d9
+		summarizeBy: none
+		sourceColumn: problema
+
+	column alcance
+		dataType: string
+		lineageTag: 82580b43-f625-4ad6-9e40-eb1deecef70c
+		summarizeBy: none
+		sourceColumn: alcance
+
+	column tratamiento
+		dataType: string
+		lineageTag: 2fe24f97-9fe5-460c-add6-7075c713053a
+		summarizeBy: none
+		sourceColumn: tratamiento
+
+	partition f_calidad_datos = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(RutaDatos & "f_calidad_datos.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"problema", type text}, {"alcance", type text}, {"tratamiento", type text}}, "en-US")
+				in
+				    Typed
+

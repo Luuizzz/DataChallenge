@@ -1,0 +1,73 @@
+table f_simulacion_escenarios
+	lineageTag: fc6d9148-0baf-4352-a2f8-9b9540bb0fbf
+
+	column escenario
+		dataType: string
+		lineageTag: b8bd09c5-083f-4d82-a7fc-bae5ebb33212
+		summarizeBy: none
+		sourceColumn: escenario
+
+	column mediana_h
+		dataType: double
+		formatString: 0.0
+		lineageTag: bd0aa107-195e-4a8b-ba01-9ca90e3c0b2c
+		summarizeBy: sum
+		sourceColumn: mediana_h
+
+	column p90_h
+		dataType: double
+		formatString: 0.0
+		lineageTag: fd502277-0b1c-4393-8fa8-b434ec3170c1
+		summarizeBy: sum
+		sourceColumn: p90_h
+
+	column pct_mas24h
+		dataType: double
+		formatString: 0.0
+		lineageTag: 81b66c17-7738-4d3a-b069-be64481764b9
+		summarizeBy: sum
+		sourceColumn: pct_mas24h
+
+	column espera_cama_mediana_h
+		dataType: double
+		lineageTag: 973be2d9-7e4e-436f-9c2a-65c5d191a446
+		summarizeBy: sum
+		sourceColumn: espera_cama_mediana_h
+
+	column delta_mediana_h
+		dataType: double
+		formatString: 0.0
+		lineageTag: 5cd4df17-36df-4426-97a0-57e2c5bdfac5
+		summarizeBy: sum
+		sourceColumn: delta_mediana_h
+
+	column delta_p90_h
+		dataType: double
+		formatString: 0.0
+		lineageTag: b9d4b9be-27ed-4ab8-8aa9-1f3614e773e9
+		summarizeBy: sum
+		sourceColumn: delta_p90_h
+
+	column horas_paciente_ahorradas_anio
+		dataType: int64
+		formatString: #,0
+		lineageTag: f68e9d9b-ee2c-4b48-97e5-96536c66b7a9
+		summarizeBy: sum
+		sourceColumn: horas_paciente_ahorradas_anio
+
+	column censo_esperando_cama
+		dataType: double
+		lineageTag: 2ef92f50-4596-4b55-82a0-ea93447eb0c6
+		summarizeBy: sum
+		sourceColumn: censo_esperando_cama
+
+	partition f_simulacion_escenarios = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(RutaDatos & "f_simulacion_escenarios.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"escenario", type text}, {"mediana_h", type number}, {"p90_h", type number}, {"pct_mas24h", type number}, {"espera_cama_mediana_h", type number}, {"delta_mediana_h", type number}, {"delta_p90_h", type number}, {"horas_paciente_ahorradas_anio", Int64.Type}, {"censo_esperando_cama", type number}}, "en-US")
+				in
+				    Typed
+

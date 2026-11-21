@@ -1,0 +1,55 @@
+table f_simulacion_sensibilidad
+	lineageTag: 59816661-74aa-45b8-833d-769ebfdf0ff3
+
+	column C
+		dataType: int64
+		lineageTag: 4961a513-acdc-41ce-9a2c-159090cce93c
+		summarizeBy: none
+		sourceColumn: C
+
+	column k
+		dataType: double
+		lineageTag: b6d16c66-55c8-4685-8888-5828e45a22fe
+		summarizeBy: sum
+		sourceColumn: k
+
+	column base_med
+		dataType: double
+		lineageTag: 539f638f-ec2b-4dfa-84e6-4c6217148e03
+		summarizeBy: sum
+		sourceColumn: base_med
+
+	column delta_altas_am_30pct
+		dataType: double
+		lineageTag: 8acf6596-0b39-404b-9230-be06742be099
+		summarizeBy: sum
+		sourceColumn: delta_altas_am_30pct
+
+	column delta_interconsulta_quir_-50pct
+		dataType: double
+		lineageTag: 6c51e5ad-1ebe-4566-b8d5-ca9c29157194
+		summarizeBy: sum
+		sourceColumn: delta_interconsulta_quir_-50pct
+
+	column delta_combinado_altas50_quir50
+		dataType: double
+		lineageTag: fd4cdaa9-2501-4a09-ad73-6cd735d82b72
+		summarizeBy: sum
+		sourceColumn: delta_combinado_altas50_quir50
+
+	column delta_referencia_+10_camas
+		dataType: double
+		lineageTag: d90fb1f8-ffcd-4f49-8362-42c946e2bc9f
+		summarizeBy: sum
+		sourceColumn: delta_referencia_+10_camas
+
+	partition f_simulacion_sensibilidad = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(RutaDatos & "f_simulacion_sensibilidad.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"C", Int64.Type}, {"k", type number}, {"base_med", type number}, {"delta_altas_am_30pct", type number}, {"delta_interconsulta_quir_-50pct", type number}, {"delta_combinado_altas50_quir50", type number}, {"delta_referencia_+10_camas", type number}}, "en-US")
+				in
+				    Typed
+

@@ -1,0 +1,55 @@
+table dim_fecha
+	lineageTag: b3f2b6b4-b0a3-42a7-a903-e5e6fbfe46a5
+
+	column fecha
+		dataType: dateTime
+		lineageTag: 12c796fa-7cd5-4dfa-addc-a279e48f506c
+		summarizeBy: none
+		sourceColumn: fecha
+
+	column anio
+		dataType: int64
+		lineageTag: 052e9441-16ef-4791-987a-6e2cefbe59bc
+		summarizeBy: none
+		sourceColumn: anio
+
+	column mes
+		dataType: int64
+		lineageTag: 8aaf4376-15b5-4d09-8f21-88dcdbc1979d
+		summarizeBy: none
+		sourceColumn: mes
+
+	column anio_mes
+		dataType: string
+		lineageTag: 3e0ba815-4d0c-4464-b378-a8842eb4e094
+		summarizeBy: none
+		sourceColumn: anio_mes
+
+	column dia_semana_num
+		dataType: int64
+		lineageTag: 69443b39-ec87-472a-bc7c-988052d0a0b6
+		summarizeBy: none
+		sourceColumn: dia_semana_num
+
+	column dia_semana
+		dataType: string
+		lineageTag: 97df3c66-28d4-43c9-88c8-8d2bf8b51f74
+		summarizeBy: none
+		sourceColumn: dia_semana
+
+	column fin_de_semana
+		dataType: boolean
+		lineageTag: 3d06e0da-218b-4c52-be09-1423f426a3ad
+		summarizeBy: none
+		sourceColumn: fin_de_semana
+
+	partition dim_fecha = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(RutaDatos & "dim_fecha.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"fecha", type date}, {"anio", Int64.Type}, {"mes", Int64.Type}, {"anio_mes", type text}, {"dia_semana_num", Int64.Type}, {"dia_semana", type text}, {"fin_de_semana", type logical}}, "en-US")
+				in
+				    Typed
+

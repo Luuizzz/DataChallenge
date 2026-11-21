@@ -1,0 +1,49 @@
+table f_interconsultas
+	lineageTag: db6cf763-2425-41b7-b963-e3da6b5a9454
+
+	column servicio
+		dataType: string
+		lineageTag: 5f08db9b-5634-4e6e-b483-656c62717350
+		summarizeBy: none
+		sourceColumn: servicio
+
+	column ingresados_con_interconsulta
+		dataType: int64
+		lineageTag: 7b386d64-ce68-4f56-acdb-771ceed89ea2
+		summarizeBy: sum
+		sourceColumn: ingresados_con_interconsulta
+
+	column mediana_h_con
+		dataType: double
+		lineageTag: e12d6412-9df9-43f2-bdd5-44629faac667
+		summarizeBy: sum
+		sourceColumn: mediana_h_con
+
+	column mediana_h_sin
+		dataType: double
+		lineageTag: 7ab3c5ab-a07c-4dbf-a9b2-142c74e77429
+		summarizeBy: sum
+		sourceColumn: mediana_h_sin
+
+	column edad_media_con
+		dataType: double
+		lineageTag: f04d349c-5832-4ae7-a07b-0c6793f09c07
+		summarizeBy: sum
+		sourceColumn: edad_media_con
+
+	column diferencia_h
+		dataType: double
+		lineageTag: 91639deb-5701-4e10-9223-656de1ce6976
+		summarizeBy: sum
+		sourceColumn: diferencia_h
+
+	partition f_interconsultas = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(RutaDatos & "f_interconsultas.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"servicio", type text}, {"ingresados_con_interconsulta", Int64.Type}, {"mediana_h_con", type number}, {"mediana_h_sin", type number}, {"edad_media_con", type number}, {"diferencia_h", type number}}, "en-US")
+				in
+				    Typed
+

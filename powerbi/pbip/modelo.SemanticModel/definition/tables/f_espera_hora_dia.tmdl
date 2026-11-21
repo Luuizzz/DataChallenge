@@ -1,0 +1,49 @@
+table f_espera_hora_dia
+	lineageTag: 0740537a-a69a-4841-becc-8874c838ba3d
+
+	column hora_llegada
+		dataType: int64
+		lineageTag: a7442efe-bd9d-4444-8b2d-b2d5356f0045
+		summarizeBy: none
+		sourceColumn: hora_llegada
+
+	column dia_semana_num
+		dataType: int64
+		lineageTag: 9280a476-50ee-4517-8a79-c1b5f989ce82
+		summarizeBy: none
+		sourceColumn: dia_semana_num
+
+	column ingresados
+		dataType: int64
+		lineageTag: 9b9d41b5-8eb5-4c8c-b785-25042eb7acdb
+		summarizeBy: sum
+		sourceColumn: ingresados
+
+	column mediana_h_hasta_hosp
+		dataType: double
+		lineageTag: 52d1d325-fb0d-477b-8001-983626f1b161
+		summarizeBy: sum
+		sourceColumn: mediana_h_hasta_hosp
+
+	column p90_h_hasta_hosp
+		dataType: double
+		lineageTag: 60294e3b-3fba-43ae-9831-69d886370ef5
+		summarizeBy: sum
+		sourceColumn: p90_h_hasta_hosp
+
+	column pct_mas24h
+		dataType: double
+		lineageTag: fbfa6fea-85dc-4316-8aab-b197fc4f021f
+		summarizeBy: sum
+		sourceColumn: pct_mas24h
+
+	partition f_espera_hora_dia = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(RutaDatos & "f_espera_hora_dia.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"hora_llegada", Int64.Type}, {"dia_semana_num", Int64.Type}, {"ingresados", Int64.Type}, {"mediana_h_hasta_hosp", type number}, {"p90_h_hasta_hosp", type number}, {"pct_mas24h", type number}}, "en-US")
+				in
+				    Typed
+

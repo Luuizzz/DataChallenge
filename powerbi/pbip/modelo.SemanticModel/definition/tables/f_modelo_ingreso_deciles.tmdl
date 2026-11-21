@@ -1,0 +1,26 @@
+table f_modelo_ingreso_deciles
+	lineageTag: ae14f1dd-d153-4519-97a3-22b0beae88bd
+
+	column decil_riesgo
+		dataType: int64
+		lineageTag: 69c8782f-f265-4c24-8996-b687b64d4b09
+		summarizeBy: none
+		sourceColumn: decil_riesgo
+
+	column tasa_ingreso_real
+		dataType: double
+		formatString: 0%
+		lineageTag: 62779d83-4ab1-4340-9f44-f24af7e77c20
+		summarizeBy: sum
+		sourceColumn: tasa_ingreso_real
+
+	partition f_modelo_ingreso_deciles = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(RutaDatos & "f_modelo_ingreso_deciles.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"decil_riesgo", Int64.Type}, {"tasa_ingreso_real", type number}}, "en-US")
+				in
+				    Typed
+

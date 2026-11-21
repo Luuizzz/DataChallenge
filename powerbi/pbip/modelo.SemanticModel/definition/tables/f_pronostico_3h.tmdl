@@ -1,0 +1,49 @@
+table f_pronostico_3h
+	lineageTag: c6ea8858-2c14-41f3-8a11-13435e6894aa
+
+	column fecha_hora_objetivo
+		dataType: dateTime
+		lineageTag: 1e5bc040-994e-43b5-882e-ef0afa8ec89e
+		summarizeBy: none
+		sourceColumn: fecha_hora_objetivo
+
+	column censo_real
+		dataType: double
+		lineageTag: 61490126-208c-4472-869b-ec97ebfdfbcf
+		summarizeBy: sum
+		sourceColumn: censo_real
+
+	column censo_pronosticado_3h
+		dataType: double
+		lineageTag: 5ae6c7b3-9862-4267-9943-150d83523a4b
+		summarizeBy: sum
+		sourceColumn: censo_pronosticado_3h
+
+	column umbral_saturacion
+		dataType: int64
+		lineageTag: 5059a01c-f943-4245-a82f-226a5184e777
+		summarizeBy: sum
+		sourceColumn: umbral_saturacion
+
+	column alerta
+		dataType: boolean
+		lineageTag: 2c1e39e0-532e-4c30-8243-f43f4568e8e9
+		summarizeBy: none
+		sourceColumn: alerta
+
+	column saturado_real
+		dataType: boolean
+		lineageTag: b14d334f-8dcb-4947-a6b4-3d52b7f13097
+		summarizeBy: none
+		sourceColumn: saturado_real
+
+	partition f_pronostico_3h = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(RutaDatos & "f_pronostico_3h.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"fecha_hora_objetivo", type datetime}, {"censo_real", type number}, {"censo_pronosticado_3h", type number}, {"umbral_saturacion", Int64.Type}, {"alerta", type logical}, {"saturado_real", type logical}}, "en-US")
+				in
+				    Typed
+

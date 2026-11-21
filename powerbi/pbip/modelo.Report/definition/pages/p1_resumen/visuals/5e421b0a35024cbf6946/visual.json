@@ -1,0 +1,93 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "5e421b0a35024cbf6946",
+  "position": {
+    "x": 852,
+    "y": 182,
+    "z": 11000,
+    "height": 232,
+    "width": 412,
+    "tabOrder": 11000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Lo que muestran los datos",
+                    "textStyle": {
+                      "fontSize": "11pt",
+                      "color": "#1F2D3D",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "① Cuello de botella: urgencias → hospitalización. Mediana ~23 h (67 % de los ingresados > 12 h). Con la base de Inglaterra (todas las atenciones), 43 % > 12 h frente a ≈ 10 %.",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#1F2D3D"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "② Solo 13 % de las altas ocurre antes del mediodía; la capacidad efectiva calibrada está al límite (supuesto).",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#1F2D3D"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "③ Quien llega de día espera ~28 h; de madrugada ~16 h.",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#1F2D3D"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "④ Interconsultas quirúrgicas: ortopedia +22 h, urología +18 h, cirugía +7 h, ajustando por edad, horario, año, censos y UCI (asociación).",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#1F2D3D"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "⑤ Altas a.m. + interconsultas rápidas: −7,3 h de mediana con 269 camas efectivas (−1,7 a −2,6 h con más holgura), sin costo.",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#1F2D3D"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

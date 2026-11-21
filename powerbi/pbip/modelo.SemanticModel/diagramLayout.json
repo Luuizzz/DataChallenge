@@ -1,0 +1,282 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 26
+          },
+          "nodeIndex": "dim_fecha",
+          "nodeLineageTag": "b3f2b6b4-b0a3-42a7-a903-e5e6fbfe46a5",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 284,
+            "y": 74
+          },
+          "nodeIndex": "f_altas_ingresos_hora",
+          "nodeLineageTag": "b4a196c7-1e8c-4deb-ae41-70d3bf0e8bb9",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 568,
+            "y": 74
+          },
+          "nodeIndex": "f_calidad_datos",
+          "nodeLineageTag": "6db4ce9c-a315-49a9-9fd3-ae61ce0938ef",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 852,
+            "y": 62
+          },
+          "nodeIndex": "f_edad",
+          "nodeLineageTag": "845fada5-41f3-4941-9749-ab5a6b0f0000",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1136,
+            "y": 38
+          },
+          "nodeIndex": "f_espera_hora_dia",
+          "nodeLineageTag": "0740537a-a69a-4841-becc-8874c838ba3d",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1420,
+            "y": 74
+          },
+          "nodeIndex": "f_flujo_transiciones",
+          "nodeLineageTag": "1f966618-93c1-4943-ad63-cf2a9866f634",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1704,
+            "y": 0
+          },
+          "nodeIndex": "f_hora",
+          "nodeLineageTag": "3c94abb8-0286-4325-8d5a-aaaa8ee3365d",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1988,
+            "y": 38
+          },
+          "nodeIndex": "f_interconsultas",
+          "nodeLineageTag": "db6cf763-2425-41b7-b963-e3da6b5a9454",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2272,
+            "y": 0
+          },
+          "nodeIndex": "f_kpi_mensual",
+          "nodeLineageTag": "bf6422ad-79cd-4e8b-b7db-8edf5081394b",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2556,
+            "y": 86
+          },
+          "nodeIndex": "f_modelo_ingreso_deciles",
+          "nodeLineageTag": "ae14f1dd-d153-4519-97a3-22b0beae88bd",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2840,
+            "y": 74
+          },
+          "nodeIndex": "f_modelos_metricas",
+          "nodeLineageTag": "208f60e1-19cf-49b6-8299-6b8745cafa16",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3124,
+            "y": 62
+          },
+          "nodeIndex": "f_n_servicios",
+          "nodeLineageTag": "223eb910-6081-420f-9c88-adb76ba72e7c",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3408,
+            "y": 38
+          },
+          "nodeIndex": "f_pronostico_3h",
+          "nodeLineageTag": "c6ea8858-2c14-41f3-8a11-13435e6894aa",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3692,
+            "y": 2
+          },
+          "nodeIndex": "f_simulacion_escenarios",
+          "nodeLineageTag": "fc6d9148-0baf-4352-a2f8-9b9540bb0fbf",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3976,
+            "y": 26
+          },
+          "nodeIndex": "f_simulacion_sensibilidad",
+          "nodeLineageTag": "59816661-74aa-45b8-833d-769ebfdf0ff3",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4260,
+            "y": 0
+          },
+          "nodeIndex": "_Medidas",
+          "nodeLineageTag": "e21714da-0a27-42b6-8445-47a3c4e8cc2f",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4544,
+            "y": 74
+          },
+          "nodeIndex": "f_decision",
+          "nodeLineageTag": "fac07731-992f-4f56-af52-f85248c0dca8",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4828,
+            "y": 38
+          },
+          "nodeIndex": "f_interconsultas_ajustado",
+          "nodeLineageTag": "644155b3-47c9-4ffb-b817-0af3f7d826ec",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 5112,
+            "y": 50
+          },
+          "nodeIndex": "f_modelo_ventanas",
+          "nodeLineageTag": "a59add65-6f1b-416a-8cfc-b0da02369ab0",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 5396,
+            "y": 62
+          },
+          "nodeIndex": "f_validacion_2026",
+          "nodeLineageTag": "fdcf79f0-4037-4250-8939-ba4d0840bc69",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

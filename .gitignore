@@ -1,0 +1,36 @@
+# ---------------------------------------------------------------
+# Datos: NUNCA se suben (propiedad del hospital / Data Challenge)
+# ---------------------------------------------------------------
+data/
+data_raw/
+outputs/
+derived/
+*.parquet
+*.duckdb
+*.duckdb.wal
+*.csv
+*.pbix
+*.abf
+
+# Caches locales de Power BI (pueden contener datos)
+**/.pbi/
+
+# Credenciales de acceso a la base
+.pg_service.conf
+.pgpass
+*.env
+.env*
+
+# Entorno y caches de Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Sistema / editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

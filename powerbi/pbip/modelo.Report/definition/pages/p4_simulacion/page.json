@@ -1,0 +1,46 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "p4_simulacion",
+  "displayName": "4 · Mejoras (simulación)",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F2F4F7'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "5bc4f515ca2f5b738522",
+      "target": "4e8af7f92c439d6b4bef",
+      "type": "NoFilter"
+    },
+    {
+      "source": "5bc4f515ca2f5b738522",
+      "target": "3b880257ff2633dcba78",
+      "type": "NoFilter"
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+table f_hora
+	lineageTag: 3c94abb8-0286-4325-8d5a-aaaa8ee3365d
+
+	column fecha_hora
+		dataType: dateTime
+		lineageTag: a330edac-6ae6-420b-8360-db106db4703f
+		summarizeBy: none
+		sourceColumn: fecha_hora
+
+	column fecha
+		dataType: dateTime
+		lineageTag: f867f5cd-bde5-4915-a451-9a0bdae36506
+		summarizeBy: none
+		sourceColumn: fecha
+
+	column hora
+		dataType: int64
+		lineageTag: 4572e579-5cb0-4aef-ae54-09b552a87109
+		summarizeBy: none
+		sourceColumn: hora
+
+	column censo_urgencias
+		dataType: double
+		lineageTag: e68fc98a-31ce-4ec8-8915-77bda85ceb5d
+		summarizeBy: sum
+		sourceColumn: censo_urgencias
+
+	column censo_hospitalizacion
+		dataType: double
+		lineageTag: b1aed3fa-361c-407e-b5ed-a706d74858e6
+		summarizeBy: sum
+		sourceColumn: censo_hospitalizacion
+
+	column llegadas_total
+		dataType: int64
+		lineageTag: be0af1c9-bc76-4193-b160-96a1db83bd33
+		summarizeBy: sum
+		sourceColumn: llegadas_total
+
+	column llegadas_15min
+		dataType: int64
+		lineageTag: ad019c2a-c5c2-44e8-9d15-063ca40ff540
+		summarizeBy: sum
+		sourceColumn: llegadas_15min
+
+	column llegadas_que_ingresan
+		dataType: int64
+		lineageTag: 280b3037-645c-41ee-815b-1d9851a69d71
+		summarizeBy: sum
+		sourceColumn: llegadas_que_ingresan
+
+	column ingresos_hosp
+		dataType: int64
+		lineageTag: a4f9a9c6-5ddd-436a-bd9c-feaa878ea7a4
+		summarizeBy: sum
+		sourceColumn: ingresos_hosp
+
+	column altas_hosp
+		dataType: int64
+		lineageTag: 97d0a806-fe96-4710-96ae-242ea5e5bc05
+		summarizeBy: sum
+		sourceColumn: altas_hosp
+
+	column saturado_urgencias
+		dataType: boolean
+		lineageTag: a89885e0-410e-4c3b-9c97-1b05352c2115
+		summarizeBy: none
+		sourceColumn: saturado_urgencias
+
+	partition f_hora = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(RutaDatos & "f_hora.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"fecha_hora", type datetime}, {"fecha", type date}, {"hora", Int64.Type}, {"censo_urgencias", type number}, {"censo_hospitalizacion", type number}, {"llegadas_total", Int64.Type}, {"llegadas_15min", Int64.Type}, {"llegadas_que_ingresan", Int64.Type}, {"ingresos_hosp", Int64.Type}, {"altas_hosp", Int64.Type}, {"saturado_urgencias", type logical}}, "en-US")
+				in
+				    Typed
+

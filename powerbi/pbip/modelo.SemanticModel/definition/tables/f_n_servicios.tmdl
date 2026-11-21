@@ -1,0 +1,37 @@
+table f_n_servicios
+	lineageTag: 223eb910-6081-420f-9c88-adb76ba72e7c
+
+	column n_servicios
+		dataType: int64
+		lineageTag: 8c7b05b9-744b-4f7a-a6ce-4738f30ec9b5
+		summarizeBy: none
+		sourceColumn: n_servicios
+
+	column ingresados
+		dataType: int64
+		lineageTag: 1e7322f3-deac-477b-8766-6133cea68d6c
+		summarizeBy: sum
+		sourceColumn: ingresados
+
+	column mediana_h_hasta_hosp
+		dataType: double
+		lineageTag: 1549032e-6405-47e9-9fbe-d4e1dd22196d
+		summarizeBy: sum
+		sourceColumn: mediana_h_hasta_hosp
+
+	column p90_h
+		dataType: double
+		lineageTag: c4fbc874-d542-454a-b9b3-ae96a04b169b
+		summarizeBy: sum
+		sourceColumn: p90_h
+
+	partition f_n_servicios = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(RutaDatos & "f_n_servicios.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"n_servicios", Int64.Type}, {"ingresados", Int64.Type}, {"mediana_h_hasta_hosp", type number}, {"p90_h", type number}}, "en-US")
+				in
+				    Typed
+

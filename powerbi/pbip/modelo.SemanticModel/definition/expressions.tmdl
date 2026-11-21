@@ -1,0 +1,4 @@
+/// Carpeta con los CSV agregados generados por 11_powerbi.py (terminar en barra invertida)
+expression RutaDatos = "C:\datachallenge\powerbi\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: efffa0b1-1a7f-440a-8dea-1300d0b9704a
+

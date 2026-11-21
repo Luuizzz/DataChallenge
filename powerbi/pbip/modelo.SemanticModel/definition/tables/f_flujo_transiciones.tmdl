@@ -1,0 +1,32 @@
+table f_flujo_transiciones
+	lineageTag: 1f966618-93c1-4943-ad63-cf2a9866f634
+
+	column origen
+		dataType: string
+		lineageTag: 0f90b6ea-bdac-4a75-9815-39eb4a63c148
+		summarizeBy: none
+		sourceColumn: origen
+
+	column destino
+		dataType: string
+		lineageTag: 0827d0dc-f24d-4f4a-bd72-36efffe5d0ca
+		summarizeBy: none
+		sourceColumn: destino
+
+	column n
+		dataType: int64
+		formatString: #,0
+		lineageTag: 7b538f3a-5232-41b9-89e3-cf285360df1f
+		summarizeBy: sum
+		sourceColumn: n
+
+	partition f_flujo_transiciones = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(RutaDatos & "f_flujo_transiciones.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"origen", type text}, {"destino", type text}, {"n", Int64.Type}}, "en-US")
+				in
+				    Typed
+

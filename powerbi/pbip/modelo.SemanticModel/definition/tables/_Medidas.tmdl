@@ -1,0 +1,143 @@
+table _Medidas
+	lineageTag: e21714da-0a27-42b6-8445-47a3c4e8cc2f
+
+	measure 'Censo urgencias medio' = AVERAGE ( f_hora[censo_urgencias] )
+		formatString: #,0
+		displayFolder: Congestión
+		lineageTag: 6057b9a6-0157-4a02-9cbc-85113c82a8ca
+
+	measure 'Censo hospitalización medio' = AVERAGE ( f_hora[censo_hospitalizacion] )
+		formatString: #,0
+		displayFolder: Congestión
+		lineageTag: 41779769-35ee-40a8-b201-63d3861501c4
+
+	measure 'Horas saturadas' = CALCULATE ( COUNTROWS ( f_hora ), f_hora[saturado_urgencias] = TRUE () )
+		formatString: #,0
+		displayFolder: Congestión
+		lineageTag: 2e34f91a-0d4a-496a-a27a-acb6b4650e34
+
+	measure '% horas saturadas' = DIVIDE ( [Horas saturadas], COUNTROWS ( f_hora ) )
+		formatString: 0.0%
+		displayFolder: Congestión
+		lineageTag: 1a5f154b-d89f-4ab7-888d-d3ac5b45f889
+
+	measure 'Llegadas (>=15 min)' = SUM ( f_hora[llegadas_15min] )
+		formatString: #,0
+		displayFolder: Flujo
+		lineageTag: 90da172b-cd10-47ac-904e-875ff400f4a5
+
+	measure 'Ingresos a hospitalización' = SUM ( f_hora[ingresos_hosp] )
+		formatString: #,0
+		displayFolder: Flujo
+		lineageTag: 61bb20a8-062e-40e3-83af-c4fad72ef7fd
+
+	measure Altas = SUM ( f_hora[altas_hosp] )
+		formatString: #,0
+		displayFolder: Flujo
+		lineageTag: 352cb694-a0ac-4e26-855a-eb42dcd0ab0d
+
+	measure '% altas antes 12h' = DIVIDE ( CALCULATE ( [Altas], f_hora[hora] < 12 ), [Altas] )
+		formatString: 0.0%
+		displayFolder: Flujo
+		lineageTag: 74fde8ed-c453-425a-866d-d1efb5dad922
+
+	measure 'Mediana h hasta hosp' = AVERAGE ( f_kpi_mensual[mediana_h_hasta_hosp] )
+		formatString: 0.0
+		displayFolder: Tiempos
+		lineageTag: 5924903d-2d5b-41ee-a78e-3a8dacfb5b5e
+
+	measure 'P90 h hasta hosp' = AVERAGE ( f_kpi_mensual[p90_h_hasta_hosp] )
+		formatString: 0.0
+		displayFolder: Tiempos
+		lineageTag: dc219b9f-25bc-4286-a603-aa2372f868e5
+
+	measure '% ingresados > 24h' = AVERAGE ( f_kpi_mensual[pct_ingresados_mas24h] ) / 100
+		formatString: 0.0%
+		displayFolder: Tiempos
+		lineageTag: 900834e1-03aa-49fa-901e-bec7b65cc8c8
+
+	measure '% urgencias resuelto en 4h' = AVERAGE ( f_kpi_mensual[pct_urg_resuelto_4h] ) / 100
+		formatString: 0.0%
+		displayFolder: Tiempos
+		lineageTag: 6dd597a0-0f27-4453-8ea0-40277c1c2c79
+
+	measure '% urgencias > 12h' = AVERAGE ( f_kpi_mensual[pct_urg_mas12h] ) / 100
+		formatString: 0.0%
+		displayFolder: Tiempos
+		lineageTag: f5e4cb9b-80b6-4778-9a0a-90799f04f7ef
+
+	measure 'Tasa de ingreso' = AVERAGE ( f_kpi_mensual[tasa_ingreso_pct] ) / 100
+		formatString: 0.0%
+		displayFolder: Tiempos
+		lineageTag: 5ef64a37-c8e7-4b9d-a057-b49eccaae4fe
+
+	measure 'Alertas correctas' = CALCULATE ( COUNTROWS ( f_pronostico_3h ), f_pronostico_3h[alerta] = TRUE (), f_pronostico_3h[saturado_real] = TRUE () )
+		formatString: #,0
+		displayFolder: Modelos
+		lineageTag: f662bc87-d582-4b7f-b252-ded41f7c7dcb
+
+	measure 'Precisión alerta 3h' = DIVIDE ( [Alertas correctas], CALCULATE ( COUNTROWS ( f_pronostico_3h ), f_pronostico_3h[alerta] = TRUE () ) )
+		formatString: 0.0%
+		displayFolder: Modelos
+		lineageTag: 8389fee7-6df8-4376-a968-a4b60a5005c2
+
+	measure 'Recall alerta 3h' = DIVIDE ( [Alertas correctas], CALCULATE ( COUNTROWS ( f_pronostico_3h ), f_pronostico_3h[saturado_real] = TRUE () ) )
+		formatString: 0.0%
+		displayFolder: Modelos
+		lineageTag: a6fc4c09-007d-4667-acab-d868820fc0cd
+
+	measure 'AUC modelo ingreso 3h' = CALCULATE ( MAX ( f_modelos_metricas[valor] ), f_modelos_metricas[metrica] = "AUC" )
+		formatString: 0.000
+		displayFolder: Modelos
+		lineageTag: fe1233d0-8c1d-47d5-ad1f-af2ff848355c
+
+	measure 'Ahorro mediana combinado (h)' = CALCULATE ( MAX ( f_simulacion_escenarios[delta_mediana_h] ), f_simulacion_escenarios[escenario] = "Combinado 50 % / −50 %" )
+		formatString: 0.0
+		displayFolder: Simulación
+		lineageTag: c022f581-3e72-4de6-8702-e9984c08076c
+
+	measure 'Ahorro p90 combinado (h)' = CALCULATE ( MAX ( f_simulacion_escenarios[delta_p90_h] ), f_simulacion_escenarios[escenario] = "Combinado 50 % / −50 %" )
+		formatString: 0.0
+		displayFolder: Simulación
+		lineageTag: 8ebd1e60-7d6a-4783-a256-765146e6259a
+
+	measure 'Δ mediana escenario (h)' = IF ( HASONEVALUE ( f_simulacion_escenarios[escenario] ), SELECTEDVALUE ( f_simulacion_escenarios[delta_mediana_h] ), [Ahorro mediana combinado (h)] )
+		formatString: 0.0
+		displayFolder: Simulación
+		lineageTag: 36e12baf-e417-471d-8b7e-0bfb0a1a3cab
+
+	measure 'Δ p90 escenario (h)' = IF ( HASONEVALUE ( f_simulacion_escenarios[escenario] ), SELECTEDVALUE ( f_simulacion_escenarios[delta_p90_h] ), [Ahorro p90 combinado (h)] )
+		formatString: 0.0
+		displayFolder: Simulación
+		lineageTag: 3478d79d-fbc6-4599-8e2e-6a60472c203f
+
+	measure 'Horas-paciente ahorradas al año' = IF ( HASONEVALUE ( f_simulacion_escenarios[escenario] ), SELECTEDVALUE ( f_simulacion_escenarios[horas_paciente_ahorradas_anio] ), CALCULATE ( MAX ( f_simulacion_escenarios[horas_paciente_ahorradas_anio] ), f_simulacion_escenarios[escenario] = "Combinado 50 % / −50 %" ) )
+		formatString: #,0
+		displayFolder: Simulación
+		lineageTag: c14ed902-479e-4f03-9cef-62d6d8e0a362
+
+	measure 'Ingresos anticipados por día' = CALCULATE ( MAX ( f_decision[valor] ), f_decision[metrica] = "Ingresos anticipados por día" )
+		formatString: 0.0
+		displayFolder: Modelos
+		lineageTag: 19f2d411-3b68-4ed2-9103-7ab56c63c58f
+
+	measure 'Horas de antelación (mediana)' = CALCULATE ( MAX ( f_decision[valor] ), f_decision[metrica] = "Horas de antelación (mediana)" )
+		formatString: 0.0
+		displayFolder: Modelos
+		lineageTag: e081a029-f2e8-4726-8f37-69625dcf6d7e
+
+	/// Meta del piloto: 30 % de las altas antes del mediodía (primer escalón hacia 50 %)
+	measure 'Meta altas antes 12h' = 0.30
+		formatString: 0%
+		displayFolder: Flujo
+		lineageTag: a21b3f99-a188-4d62-93ec-1c8749513e7d
+
+	column x
+		lineageTag: d044864b-6636-47b4-b3d5-cf3f8b8e2ad9
+		isNameInferred
+		sourceColumn: [x]
+
+	partition _Medidas = calculated
+		mode: import
+		source = ROW("x", BLANK())
+

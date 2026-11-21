@@ -1,0 +1,31 @@
+table f_altas_ingresos_hora
+	lineageTag: b4a196c7-1e8c-4deb-ae41-70d3bf0e8bb9
+
+	column hora
+		dataType: int64
+		lineageTag: 30cee311-09d4-48b5-a3d5-c6c14ab4aa3a
+		summarizeBy: none
+		sourceColumn: hora
+
+	column ingresos_hosp
+		dataType: double
+		lineageTag: 98a3e57b-3f7d-40e9-9864-bd36ebfa6024
+		summarizeBy: sum
+		sourceColumn: ingresos_hosp
+
+	column altas_hosp
+		dataType: double
+		lineageTag: ff77a9e0-a556-4d02-9ebd-322682148397
+		summarizeBy: sum
+		sourceColumn: altas_hosp
+
+	partition f_altas_ingresos_hora = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(RutaDatos & "f_altas_ingresos_hora.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"hora", Int64.Type}, {"ingresos_hosp", type number}, {"altas_hosp", type number}}, "en-US")
+				in
+				    Typed
+

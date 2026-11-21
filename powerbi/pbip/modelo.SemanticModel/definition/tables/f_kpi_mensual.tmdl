@@ -1,0 +1,73 @@
+table f_kpi_mensual
+	lineageTag: bf6422ad-79cd-4e8b-b7db-8edf5081394b
+
+	column anio_mes
+		dataType: string
+		lineageTag: 95393bc5-aea7-411f-b46c-74c20da25faf
+		summarizeBy: none
+		sourceColumn: anio_mes
+
+	column episodios_urg_15min
+		dataType: int64
+		lineageTag: a6afe6e3-d9fc-4428-8db0-71f4a5124c20
+		summarizeBy: sum
+		sourceColumn: episodios_urg_15min
+
+	column ingresos
+		dataType: int64
+		lineageTag: 9c4d48e5-2778-4357-a00d-c2472c30bf4d
+		summarizeBy: sum
+		sourceColumn: ingresos
+
+	column tasa_ingreso_pct
+		dataType: double
+		lineageTag: edbfc52b-57f8-42ae-9f37-fb1f4fe80c48
+		summarizeBy: sum
+		sourceColumn: tasa_ingreso_pct
+
+	column mediana_h_hasta_hosp
+		dataType: double
+		lineageTag: 21f56f58-ce6e-43f0-b1c8-9ffee7370b8e
+		summarizeBy: sum
+		sourceColumn: mediana_h_hasta_hosp
+
+	column p90_h_hasta_hosp
+		dataType: double
+		lineageTag: 82fcb8da-0c03-4b98-bf72-ab1452c66abb
+		summarizeBy: sum
+		sourceColumn: p90_h_hasta_hosp
+
+	column pct_ingresados_mas24h
+		dataType: double
+		lineageTag: d15c961c-95cc-4677-bb74-c626f8370d97
+		summarizeBy: sum
+		sourceColumn: pct_ingresados_mas24h
+
+	column pct_urg_resuelto_4h
+		dataType: double
+		lineageTag: 6e79dc73-5355-4d7f-ab22-b98446f3b3df
+		summarizeBy: sum
+		sourceColumn: pct_urg_resuelto_4h
+
+	column pct_urg_mas12h
+		dataType: double
+		lineageTag: df7f23b4-c677-4ee8-968a-688817993711
+		summarizeBy: sum
+		sourceColumn: pct_urg_mas12h
+
+	column mediana_estancia_dias
+		dataType: double
+		lineageTag: 48f5334a-a282-4783-8260-7d88c474da7a
+		summarizeBy: sum
+		sourceColumn: mediana_estancia_dias
+
+	partition f_kpi_mensual = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(RutaDatos & "f_kpi_mensual.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"anio_mes", type text}, {"episodios_urg_15min", Int64.Type}, {"ingresos", Int64.Type}, {"tasa_ingreso_pct", type number}, {"mediana_h_hasta_hosp", type number}, {"p90_h_hasta_hosp", type number}, {"pct_ingresados_mas24h", type number}, {"pct_urg_resuelto_4h", type number}, {"pct_urg_mas12h", type number}, {"mediana_estancia_dias", type number}}, "en-US")
+				in
+				    Typed
+

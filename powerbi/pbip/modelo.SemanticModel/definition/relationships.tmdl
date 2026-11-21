@@ -1,0 +1,4 @@
+relationship f_hora_fecha_dim_fecha_fecha
+	fromColumn: f_hora.fecha
+	toColumn: dim_fecha.fecha
+

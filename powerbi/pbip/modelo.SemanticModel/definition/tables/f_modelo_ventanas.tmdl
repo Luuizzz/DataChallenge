@@ -1,0 +1,44 @@
+table f_modelo_ventanas
+	lineageTag: a59add65-6f1b-416a-8cfc-b0da02369ab0
+
+	column modelo
+		dataType: string
+		lineageTag: 27ec9893-a1cd-4e3a-a92b-3e03f4f122fa
+		summarizeBy: none
+		sourceColumn: modelo
+
+	column auc
+		dataType: double
+		formatString: 0.000
+		lineageTag: 67521d2e-20b6-4cfe-82b3-9ea11ca2b8a6
+		summarizeBy: sum
+		sourceColumn: auc
+
+	column ic95_inf
+		dataType: double
+		lineageTag: 94bf943f-eab5-4d5d-b9e1-2b6290f4f3eb
+		summarizeBy: sum
+		sourceColumn: ic95_inf
+
+	column ic95_sup
+		dataType: double
+		lineageTag: 56ae4b1a-5c5a-4bbb-a337-8154cf191516
+		summarizeBy: sum
+		sourceColumn: ic95_sup
+
+	column orden
+		dataType: int64
+		lineageTag: b14c10ea-b6cf-4dad-b30c-6c6d4c96ddec
+		summarizeBy: none
+		sourceColumn: orden
+
+	partition f_modelo_ventanas = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(RutaDatos & "f_modelo_ventanas.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"modelo", type text}, {"auc", type number}, {"ic95_inf", type number}, {"ic95_sup", type number}, {"orden", Int64.Type}}, "en-US")
+				in
+				    Typed
+

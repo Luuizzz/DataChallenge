@@ -1,0 +1,36 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["MCP-PBIModeling","DevMode"]
+
+ref table dim_fecha
+ref table f_altas_ingresos_hora
+ref table f_calidad_datos
+ref table f_edad
+ref table f_espera_hora_dia
+ref table f_flujo_transiciones
+ref table f_hora
+ref table f_interconsultas
+ref table f_kpi_mensual
+ref table f_modelo_ingreso_deciles
+ref table f_modelos_metricas
+ref table f_n_servicios
+ref table f_pronostico_3h
+ref table f_simulacion_escenarios
+ref table f_simulacion_sensibilidad
+ref table _Medidas
+ref table f_interconsultas_ajustado
+ref table f_modelo_ventanas
+ref table f_decision
+ref table f_validacion_2026
+
+ref cultureInfo en-US
+

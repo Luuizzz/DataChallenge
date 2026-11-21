@@ -1,0 +1,32 @@
+table f_modelos_metricas
+	lineageTag: 208f60e1-19cf-49b6-8299-6b8745cafa16
+
+	column modelo
+		dataType: string
+		lineageTag: 9ded76c5-2898-46f2-a5f8-45a0f5b8c3ff
+		summarizeBy: none
+		sourceColumn: modelo
+
+	column metrica
+		dataType: string
+		lineageTag: 26abd533-e32d-479a-9d13-141ed5e9acb4
+		summarizeBy: none
+		sourceColumn: metrica
+
+	column valor
+		dataType: double
+		formatString: 0.000
+		lineageTag: 5ed56384-3584-4304-acb0-e27ae1ae5a1f
+		summarizeBy: sum
+		sourceColumn: valor
+
+	partition f_modelos_metricas = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(RutaDatos & "f_modelos_metricas.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"modelo", type text}, {"metrica", type text}, {"valor", type number}}, "en-US")
+				in
+				    Typed
+
