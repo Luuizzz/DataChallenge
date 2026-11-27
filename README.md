@@ -1,6 +1,7 @@
 # Data Challenge HUN 2026: flujo de pacientes urgencias → hospitalización
 
 Análisis, predicción y optimización del flujo de pacientes sobre datos OMOP-CDM anonimizados.
+
 **Documento completo:** [`docs/DOCUMENTO_FINAL.md`](docs/DOCUMENTO_FINAL.md)
 
 > **Este repositorio no contiene datos.** Los datasets son propiedad de sus titulares y solo pueden usarse dentro del Data Challenge HUN 2026. `.gitignore` excluye Parquet, CSV, bases DuckDB, archivos `.pbix`, cachés de Power BI y credenciales. Para probar el código sin acceso a la base hay un **generador de datos sintéticos** con el mismo esquema.
