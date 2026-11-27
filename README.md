@@ -5,6 +5,7 @@ Análisis, predicción y optimización del flujo de pacientes sobre datos OMOP-C
 
 > **Este repositorio no contiene datos.** Los datasets son propiedad de sus titulares y solo pueden usarse dentro del Data Challenge HUN 2026. `.gitignore` excluye Parquet, CSV, bases DuckDB, archivos `.pbix`, cachés de Power BI y credenciales. Para probar el código sin acceso a la base hay un **generador de datos sintéticos** con el mismo esquema.
 
+
 ## Hallazgos principales
 
 - Mediana de **~23 h** desde la llegada a urgencias hasta la hospitalización; el 67 % de los ingresados supera las 12 h (43 % de todas las atenciones, frente a ~10 % en Inglaterra). La espera ocurre dentro de la atención en urgencias, no en el registro.
